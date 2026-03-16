@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 import type { Movie } from "../types/movie";
 
 interface MovieResponse {
@@ -17,7 +17,7 @@ export async function fetchMovies(query: string, page = 1): Promise<Movie[]> {
     throw new Error("Missing VITE_TMDB_TOKEN");
   }
 
-  const response: AxiosResponse<MovieResponse> = await axios.get(API_URL, {
+  const response = await axios.get<MovieResponse>(API_URL, {
     params: {
       query,
       page,

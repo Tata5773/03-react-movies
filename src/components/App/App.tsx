@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { fetchMovies } from "../../services/movieService";
 import type { Movie } from "../../types/movie";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
@@ -30,8 +30,12 @@ function App() {
     try {
       const results = await fetchMovies(query);
       setMovies(results);
+
+      if (results.length === 0) {
+        toast.error("No movies found for your request.");
+      }
     } catch {
-      setError("No movies found for your request.");
+      setError("There was an error, please try again...");
     } finally {
       setIsLoading(false);
     }
